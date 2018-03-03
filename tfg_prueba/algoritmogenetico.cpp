@@ -11,7 +11,7 @@ AlgoritmoGenetico::AlgoritmoGenetico(int n, float probCruce, float alfa,int d,bo
     blx_alfa = alfa;
     probabilidadCruce = probCruce;
     //Calculamos el número de cruces a llevar a cabo en función de la probabilidad
-    nEsperadoCruces = probabilidadCruce*(poblacion.size()/2) + 1;
+    nEsperadoCruces = probabilidadCruce*(poblacionInicial.size()/2) + 1;
 
     //De momento lo dejamos sin aplicar mutación
     //probabilidadMutacion = probMutacion;
@@ -64,7 +64,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
     if(generacional){
         Solucion mejorEncontrado;
         int i = 0;
-        while(llamadasFuncionObjetivo < 5000){
+        while( llamadasFuncionObjetivo < 10*poblacionInicial.size()){
             i++;
             mejorEncontrado = poblacion[0];
             //cout << llamadasFuncionObjetivo << endl;
@@ -139,14 +139,16 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
             //de la población anterior
             if(mejorEncontrado.fitness < poblacion[0].fitness){
                 poblacion[0] = mejorEncontrado;
+            }else{
+                mejorEncontrado = poblacion[0];
             }
-            //cout << "Iteración " << i << ": MEJOR FITNESS->" << poblacion[0].fitness << endl;
+            cout << "Iteración " << i << ": MEJOR FITNESS->" << poblacion[0].fitness << endl;
         }
     }else{
         Solucion hijoObtenido;
         int i = 0;
         int padre1=0,padre2=0;
-        while(llamadasFuncionObjetivo < 50*tamPoblacion){
+        while( llamadasFuncionObjetivo < 10*poblacionInicial.size()){
             i++;
             vector<Solucion> poblacionHijos;
 
@@ -244,7 +246,7 @@ Solucion AlgoritmoGenetico::OperadorCruce(Solucion p1, Solucion p2)
 
         //Con los valores anteriores obtenemos el rango en el que obtener el valor de
         //la posición correspondiente en el vector
-        hijo.solucion[i] = hijo.ValorAleatorioFloat(Cmin-I*blx_alfa,Cmax+I*blx_alfa);
+        hijo.solucion[i] = hijo.ValorAleatorioFloat(Cmin-I*blx_alfa,Cmax-I*blx_alfa);
 
     }
 
@@ -262,12 +264,16 @@ void AlgoritmoGenetico::ordenarPoblacion(vector<Solucion> &pobl)
 {
     int j;
     Solucion valor;
+    Solucion aux;
 
     for (unsigned int i = 1; i < pobl.size(); i++){
          valor = pobl[i];
          j = i - 1;
          while (j >= 0 && pobl[j].fitness > valor.fitness){
+             // Hay que reordenar los individuos, no sólo copiar
+              aux = pobl[j+1];
               pobl[j + 1] = pobl[j];
+              pobl[j] = aux;
               j--;
          }
 
@@ -318,7 +324,7 @@ int AlgoritmoGenetico::seleccionTorneoBinario()
     }
 
     //Devolvemos la mejor de ellas  (su indice)
-    if(sol1<sol2)
+    if(poblacion[sol1].fitness <poblacion[sol2].fitness)
         return sol1;
     return sol2;
 }

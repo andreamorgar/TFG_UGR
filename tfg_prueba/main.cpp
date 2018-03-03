@@ -23,7 +23,7 @@ int main()
 
     AlgoritmoGenetico algoritmoGenetico(tamPobl,probabilidadCruce,valorAlpha,dimensionIndividuo,true,1);
     //Creamos una población inicial
-    algoritmoGenetico.crearPoblacionInicial(-80.0,80.0);
+    algoritmoGenetico.crearPoblacionInicial(-100.0,100.0);
     Solucion solAGG;
     //Ejecutamos algoritmo
     solAGG = algoritmoGenetico.run(algoritmoGenetico.poblacionInicial);
@@ -45,10 +45,6 @@ int main()
 //        }
 //        cout << endl;
 //     }
-
-
-//    AlgoritmoGenetico alg2(tamPobl,probabilidadCruce,valorAlpha,dimensionIndividuo);
-//    solAGG = algoritmoGenetico.run(algoritmoGenetico.poblacion);
 
 //    int dim = 2;
 //    cout << "...." << endl;
