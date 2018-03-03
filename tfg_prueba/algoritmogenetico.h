@@ -10,7 +10,6 @@ public:
     vector<Solucion> poblacionInicial, poblacion;
     Solucion solucion;
     int dimSolucion; //dimensión del vector individuo de la población
-
     float probabilidadCruce;
     //float probabilidadMutacion;
     float tamPoblacion;

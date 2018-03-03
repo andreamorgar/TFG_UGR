@@ -40,18 +40,24 @@ void AlgoritmoGenetico::crearPoblacionInicial(float valorIni, float valorFin)
 //Función que aplica el algoritmo genético a una población pasada como parámetro
 Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
 {
-    //Numero de llamadas a la función objetivo--------------------------------------------------------------------?
+    //Inicialmente hay tantas llamadas objetivo realizadas como individuos de la población
+    //ya que hemos tenido que calcular el valor fitness de cada uno de ellos.
     llamadasFuncionObjetivo = tamPoblacion;
-    //Inicializamos la población con la que empieza el algoritmo al valor pasado por parámetro
-    poblacion = poblacionInicial ;
 
+    //Inicializamos la población con la que empieza el algoritmo con la población pasada
+    //por parámetro
+    poblacion = poblacionInicial;
+
+    //==================================================================================
+    //Mostramos por pantalla la población inicial
     cout << "Población inicial :" << endl;
     for(unsigned int i=0;i<poblacionInicial.size();i++){
         for(unsigned int j=0; j<poblacionInicial[i].solucion.size();j++){
             cout << poblacionInicial[i].solucion[j] << " " ;
         }
-        cout << endl;
+        cout <<", fitness->" << poblacionInicial[i].fitness << endl;
      }
+    //==================================================================================
 
     //Iniciamos las variables necesarias para poder medir el tiempo de ejecución del algoritmo
     clock_t start,end;
@@ -59,7 +65,8 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
 
 
     ordenarPoblacion(poblacion);
-    cout << "Mejor solución original: " << poblacion[0].fitness << endl;
+    cout << "MEJOR VALOR FITNESS INICIAL: " << poblacion[0].fitness << endl;
+//    double mejorFitnessAnterior = poblacion[0].fitness ;
 
     if(generacional){
         Solucion mejorEncontrado;
@@ -72,7 +79,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
 
             //Para obtener la población de los descendientes distinguimos entre los dos métodos de selección
             if(metodoSeleccion==1){
-                //1. Obtengo población de los padres mediante un proceso de selección de la población de partida
+                //1. Obtengo población de los padres mediante un proceso de selección mediante torneo binario
                 int sol_seleccionada;
                 for(int i=0; i<tamPoblacion; i++){
                     sol_seleccionada = seleccionTorneoBinario();
@@ -99,11 +106,18 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
                     sol_cruzada+=2;
                 }
 
+                //3. Añadimos los padres que no se han cruzado a la población de los hijos
+                for(unsigned int i=poblacionHijos.size(); i< poblacionPadres.size();i++){
+                   poblacionHijos.push_back(poblacionPadres[i]);
+                }
+
             }else if(metodoSeleccion==2){
                 Solucion hijoObtenido1,hijoObtenido2;
                 for(int i=0; i<nEsperadoCruces ; i++){
                     //Genero por cada pareja de padres dos hijos
+                    //1. Genero un valor aleatorio para elegir el primer padre
                     int padre1 = poblacion[0].ValorAleatorio(0,poblacion.size()-1);
+                    //2. Genero tres posibles padres y me quedo con el más distante al padre1
                     int padre2 = seleccionNAM(padre1);
 
                     //Obtenemos primer hijo de la pareja
@@ -116,35 +130,44 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
                     poblacionHijos.push_back(hijoObtenido2);
                     llamadasFuncionObjetivo++;
                 }
-            }
 
-
-            //3. Añadimos los padres que no se han cruzado a la población de los hijos
-            for(unsigned int i=poblacionHijos.size(); i< poblacionPadres.size();i++){
-               poblacionHijos.push_back(poblacionPadres[i]);
+                //Para completar la población hasta el tamaño tamPoblacion añado a la población de
+                //los hijos los tamPoblacion-numeroHijos peores individuos de la población actual
+                //(hasta alcanzar el tamaño tamPoblacion)
+                for(unsigned int i=poblacionHijos.size(); i< poblacionPadres.size();i++){
+                   poblacionHijos.push_back(poblacion[i]);
+                }
             }
 
             //4. Muto la población de los hijos
             //Vamos a mutar nEsperadoGenesMutados
-            //Mutacion(poblacionHijos);  PRESCINDIR DE MUTACIÓN????????
+            //Mutacion(poblacionHijos);  (De momento prescindimos de mutación)
 
-            //Ordenamos la población obtenida por menor coste
+            //Ordenamos la población obtenida en función de menor valor fitness
             ordenarPoblacion(poblacionHijos);
 
+            //Actualizo la población a la nueva generada
             poblacion = poblacionHijos;
+
             //Para mantener el elitismo, nos aseguramos siempre que la mejor solución sea mejor o
             //igual que la de la población anterior
-
-            //En caso de no serlo, cambiamos la mejor solución de la población actual por la mejor
-            //de la población anterior
+            //En caso de no serlo, cambiamos la mejor solución de la nueva población por la mejor
+            //de la generación anterior
             if(mejorEncontrado.fitness < poblacion[0].fitness){
                 poblacion[0] = mejorEncontrado;
             }else{
                 mejorEncontrado = poblacion[0];
             }
-            cout << "Iteración " << i << ": MEJOR FITNESS->" << poblacion[0].fitness << endl;
+            cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
+//            cout << "Iteración " << i << ": MEJORA RESPECTO A ANTERIOR-> " << mejorFitnessAnterior-poblacion[0].fitness << endl << endl;
+//            mejorFitnessAnterior = poblacion[0].fitness;
+
         }
     }else{
+        //Algoritmo genético estacionario: vamos a cruzar dos padres y obtener dos hijos
+        //Los dos hijos competirán con los dos individuos peores de la población, y de entre
+        //estos cuatro, conservamos en la población los dos mejores.
+
         Solucion hijoObtenido;
         int i = 0;
         int padre1=0,padre2=0;
@@ -158,6 +181,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
                 //Elegimos los padres mediante la realización de un torneo binario
                 padre1 = seleccionTorneoBinario();
                 padre2 = seleccionTorneoBinario();
+
             }else if(metodoSeleccion==2){
                 //Elegimos el primer padre de manera aleatoria
                 padre1 = poblacion[0].ValorAleatorio(0,poblacion.size()-1);
@@ -174,49 +198,33 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
             poblacionHijos.push_back(hijoObtenido);
             llamadasFuncionObjetivo++;
 
-            //4. Sustituir por los padres
-            //para facilitar los cálculos, añado los dos peores de la población a poblacionHijos, para ponerlos
+            //3. Sustituir por los padres
+            //Para facilitar los cálculos, añado los dos peores de la población a poblacionHijos, para ponerlos
             //a competir con los hijos recién generados
             poblacionHijos.push_back(poblacion[poblacion.size()-1]);
             poblacionHijos.push_back(poblacion[poblacion.size()-2]);
 
+            //Ordenamos la población de los hijos para obtener las dos mejores soluciones que ocuparán las dos
+            //últimas posiciones (que sustituirán o no a los dos peores individuos de la población)
             ordenarPoblacion(poblacionHijos);
             poblacion[poblacion.size()-1] = poblacionHijos[0]; //el mejor de la poblacionHijos guardado en ultima pos
             poblacion[poblacion.size()-2] = poblacionHijos[1];
 
             //4. Muto la población de los hijos
             //Vamos a mutar nEsperadoGenesMutados
-            //Mutacion(poblacionHijos);  PRESCINDIR DE MUTACIÓN????????
+            //Mutacion(poblacionHijos);  De momento prescindimos de mutación.
 
             //Ordenamos la población obtenida por menor coste
             ordenarPoblacion(poblacionHijos);
 
+            //5. Actualizamos la población con los nuevos cambios
             poblacion = poblacionHijos;
 
         }
 
-        //cout << "Iteración " << i << ": MEJOR FITNESS->" << poblacion[0].fitness << endl;
-
-        //-----ELITISMO FORMA 1 (NO UTILIZADA)------------------------------------------------------------
-        //        //5. Para mantener el elitismo, si no se encuentra el mejor padre de la población
-        //        //anterior, tenemos que añadirlo nosotros intercambiandolo por el peor de la población de
-        //        //los hijos
-
-        //        bool mejor_encontrado = false;
-        //        for(unsigned int i = 0; i < poblacionHijos.size() && !mejor_encontrado ; i++){
-        //            if( poblacion[0].solucion == poblacionHijos[i].solucion){
-        //                mejor_encontrado=true;
-        //            }
-        //        }
-
-        //        //Si la mejor solución de la población de partida no está incluida en la población de los hijos
-        //        //la sustituimos por la peor encontrada en los hijos.
-        //        if(!mejor_encontrado){
-        //            poblacionHijos[poblacionHijos.size()-1] = poblacion[0];
-        //        }
-        //-----------------------------------------------------------------------------------------------
-
-
+        cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
+//        cout << "Iteración " << i << ": MEJORA RESPECTO A ANTERIOR-> " << mejorFitnessAnterior-poblacion[0].fitness << endl << endl;
+//        mejorFitnessAnterior = poblacion[0].fitness;
     }
 
     end = clock();
@@ -235,7 +243,7 @@ Solucion AlgoritmoGenetico::OperadorCruce(Solucion p1, Solucion p2)
     Solucion hijo;
     hijo.solucion.resize(p1.solucion.size());
 
-    float I,Cmax,Cmin;
+    float I = 0 ,Cmax = p1.solucion[0], Cmin = p1.solucion[0];
     //Vamos obteniendo uno a uno los valores para el hijo
     for(unsigned int i=0; i< hijo.solucion.size(); i++){
 
@@ -246,7 +254,7 @@ Solucion AlgoritmoGenetico::OperadorCruce(Solucion p1, Solucion p2)
 
         //Con los valores anteriores obtenemos el rango en el que obtener el valor de
         //la posición correspondiente en el vector
-        hijo.solucion[i] = hijo.ValorAleatorioFloat(Cmin-I*blx_alfa,Cmax-I*blx_alfa);
+        hijo.solucion[i] = hijo.ValorAleatorioFloat(Cmin-I*blx_alfa,Cmax+I*blx_alfa);
 
     }
 
@@ -270,11 +278,11 @@ void AlgoritmoGenetico::ordenarPoblacion(vector<Solucion> &pobl)
          valor = pobl[i];
          j = i - 1;
          while (j >= 0 && pobl[j].fitness > valor.fitness){
-             // Hay que reordenar los individuos, no sólo copiar
-              aux = pobl[j+1];
-              pobl[j + 1] = pobl[j];
-              pobl[j] = aux;
-              j--;
+
+            aux = pobl[j+1];
+            pobl[j + 1] = pobl[j];
+            pobl[j] = aux;
+            j--;
          }
 
          pobl[j + 1] = valor;
