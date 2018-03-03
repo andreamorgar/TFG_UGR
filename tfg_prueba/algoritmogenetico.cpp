@@ -1,6 +1,6 @@
 #include "algoritmogenetico.h"
 
-AlgoritmoGenetico::AlgoritmoGenetico(int n, float probCruce, float alfa,int d,bool tipoAGG, int selec)
+AlgoritmoGenetico::AlgoritmoGenetico(int n, float probCruce, float alfa,int d,bool tipoAGG, int selec, bool rw)
 {
     //Inicializamos la población y guardamos su tamaño
     tamPoblacion = n;
@@ -21,6 +21,7 @@ AlgoritmoGenetico::AlgoritmoGenetico(int n, float probCruce, float alfa,int d,bo
     //y el tipo de algoritmo genético aplicado (generacional o estacionario)
     generacional = tipoAGG;
     metodoSeleccion = selec;
+    replaceWorst = rw;
 
 }
 
@@ -167,10 +168,11 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
         //Algoritmo genético estacionario: vamos a cruzar dos padres y obtener dos hijos
         //Los dos hijos competirán con los dos individuos peores de la población, y de entre
         //estos cuatro, conservamos en la población los dos mejores.
-
+        cout << "Entra aquí" << endl;
         Solucion hijoObtenido;
         int i = 0;
         int padre1=0,padre2=0;
+
         while( llamadasFuncionObjetivo < 10*poblacionInicial.size()){
             i++;
             vector<Solucion> poblacionHijos;
@@ -181,7 +183,6 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
                 //Elegimos los padres mediante la realización de un torneo binario
                 padre1 = seleccionTorneoBinario();
                 padre2 = seleccionTorneoBinario();
-
             }else if(metodoSeleccion==2){
                 //Elegimos el primer padre de manera aleatoria
                 padre1 = poblacion[0].ValorAleatorio(0,poblacion.size()-1);
@@ -204,9 +205,9 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
             poblacionHijos.push_back(poblacion[poblacion.size()-1]);
             poblacionHijos.push_back(poblacion[poblacion.size()-2]);
 
-            //Ordenamos la población de los hijos para obtener las dos mejores soluciones que ocuparán las dos
-            //últimas posiciones (que sustituirán o no a los dos peores individuos de la población)
+            //Ordenamos la población obtenida por menor coste
             ordenarPoblacion(poblacionHijos);
+            cout << "mejor fitness de los que compiten: " << poblacionHijos[0].fitness << endl;
             poblacion[poblacion.size()-1] = poblacionHijos[0]; //el mejor de la poblacionHijos guardado en ultima pos
             poblacion[poblacion.size()-2] = poblacionHijos[1];
 
@@ -214,17 +215,10 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
             //Vamos a mutar nEsperadoGenesMutados
             //Mutacion(poblacionHijos);  De momento prescindimos de mutación.
 
-            //Ordenamos la población obtenida por menor coste
-            ordenarPoblacion(poblacionHijos);
 
-            //5. Actualizamos la población con los nuevos cambios
-            poblacion = poblacionHijos;
-
-        }
-
-        cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
-//        cout << "Iteración " << i << ": MEJORA RESPECTO A ANTERIOR-> " << mejorFitnessAnterior-poblacion[0].fitness << endl << endl;
-//        mejorFitnessAnterior = poblacion[0].fitness;
+            ordenarPoblacion(poblacion);
+            cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
+        } 
     }
 
     end = clock();
@@ -344,6 +338,7 @@ int AlgoritmoGenetico::seleccionTorneoBinario()
 //que sea más distante al padre previamente seleccionado.
 int AlgoritmoGenetico::seleccionNAM(int padre1)
 {
+
     //Creamos un vector para almacenar la diferencia de valor fitness entre los
     //candidatos y el padre elegido (pasado por parámetro) para posteriormente encontrar
     //al padre más distante de padre1.
@@ -390,6 +385,13 @@ int AlgoritmoGenetico::seleccionNAM(int padre1)
         }
 
     }
+
+//    cout << "Padre1: " << padre1 << ",fitness: " << poblacion[padre1].fitness << endl;
+//    cout << "Sol1: " << sol1 << ",fitness: " << poblacion[sol1].fitness << endl;
+//    cout << "Sol2: " << sol2 << ",fitness: " << poblacion[sol2].fitness << endl;
+//    cout << "Sol3: " << sol3 << ",fitness: " << poblacion[sol3].fitness << endl;
+//    cout << "Solucion distante: " << solucionDistante << endl;
+
     //Finalmente nos quedamos con el candidato más distante
     return solucionesCandidatas[solucionDistante];
 

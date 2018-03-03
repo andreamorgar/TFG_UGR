@@ -20,8 +20,12 @@ int main()
     int dimensionIndividuo = 10;
     float probabilidadCruce = 0.8;
     float valorAlpha = 0.3;
+    int metodoSeleccion = 1; //1->TB, 2->NAM
+    bool repl_worst = true;//True->versión RW, False->versión DC
+    bool aggGen = false; //True->versión generacional, False->versión estacionario
 
-    AlgoritmoGenetico algoritmoGenetico(tamPobl,probabilidadCruce,valorAlpha,dimensionIndividuo,true,1);
+    AlgoritmoGenetico algoritmoGenetico(tamPobl,probabilidadCruce,valorAlpha,dimensionIndividuo,
+                                        aggGen,metodoSeleccion,repl_worst);
     //Creamos una población inicial
     algoritmoGenetico.crearPoblacionInicial(-80.0,80.0);
     Solucion solAGG;

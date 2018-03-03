@@ -6,7 +6,7 @@
 class AlgoritmoGenetico
 {
 public:
-    AlgoritmoGenetico(int n, float probCruce, float alfa, int d, bool tipoAGG, int selec);
+    AlgoritmoGenetico(int n, float probCruce, float alfa, int d, bool tipoAGG, int selec, bool rw);
     vector<Solucion> poblacionInicial, poblacion;
     Solucion solucion;
     int dimSolucion; //dimensión del vector individuo de la población
@@ -32,6 +32,7 @@ public:
 
     int metodoSeleccion;
     bool generacional;
+    bool replaceWorst;
 
     int seleccionTorneoBinario();
     int seleccionNAM(int padre1);
