@@ -7,7 +7,7 @@
 Solucion::Solucion(int &semilla)
 {
     Seed = semilla;
-    //cout << "Semilla establecida: " << semilla << endl;
+    cout << "Semilla establecida: " << semilla << endl;
 }
 
 

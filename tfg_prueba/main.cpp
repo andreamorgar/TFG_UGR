@@ -6,12 +6,15 @@ using namespace std;
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag,n_flag,func_flag,*SS;
 
-int main()
+int main(int argc, char *argv[])
 {
+
+    //Establecer semilla
+    int semilla = atoi(argv[1]);
+
     ini_flag=0;
     int fun=1;
-    //Establecer semilla
-    int semilla = 123456;
+
     Solucion cambiarSemilla(semilla);
 
     //--------------------------------------------ALGORITMO GENÉTICO GENERACIONAL-------------------------------------------

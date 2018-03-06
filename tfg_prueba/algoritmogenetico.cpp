@@ -72,7 +72,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
     if(generacional){
         Solucion mejorEncontrado;
         int i = 0;
-        while( llamadasFuncionObjetivo < 10*poblacionInicial.size()){
+        while( llamadasFuncionObjetivo < 1000*poblacionInicial.size()){
             i++;
             mejorEncontrado = poblacion[0];
             //cout << llamadasFuncionObjetivo << endl;
@@ -173,7 +173,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
         int i = 0;
         int padre1=0,padre2=0;
 
-        while( llamadasFuncionObjetivo < 10*poblacionInicial.size()){
+        while( llamadasFuncionObjetivo < 1000*poblacionInicial.size()){
             i++;
             vector<Solucion> poblacionHijos;
 
