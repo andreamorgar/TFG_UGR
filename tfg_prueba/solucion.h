@@ -16,8 +16,8 @@ public:
     vector<double> solucion;
     float fitness;
 
-    Solucion(int &semilla);
-    void calcularFitness(int num=1);
+    Solucion(int &semilla, int &funcion);
+    void calcularFitness();
     void solucionRandom(int tam, float valorIni, float valorFin);
 
     void OperadorIntercambio(int r, int s);

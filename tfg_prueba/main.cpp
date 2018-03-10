@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
     ini_flag=0;
     int fun=1;
 
-    Solucion cambiarSemilla(semilla);
+    //Establecemos la semilla inicial y la función a evaluar
+    Solucion cambiarSemilla(semilla,fun);
 
     //--------------------------------------------ALGORITMO GENÉTICO GENERACIONAL-------------------------------------------
     //Establecemos parámetros del algoritmo genético
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
     float valorAlpha = 0.3;
     int metodoSeleccion = 1; //1->TB, 2->NAM
     bool repl_worst = true;//True->versión RW, False->versión DC
-    bool aggGen = false; //True->versión generacional, False->versión estacionario
+    bool aggGen = true; //True->versión generacional, False->versión estacionario
 
     AlgoritmoGenetico algoritmoGenetico(tamPobl,probabilidadCruce,valorAlpha,dimensionIndividuo,
                                         aggGen,metodoSeleccion,repl_worst);
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
     //Ejecutamos algoritmo
     solAGG = algoritmoGenetico.run(algoritmoGenetico.poblacionInicial);
 
-//    Mostramos la mejor solución encontrada por el algoritmo
+    //Mostramos la mejor solución encontrada por el algoritmo
     cout << "Mejor solución encontrada: ";
     for(unsigned int i=0; i<solAGG.solucion.size();i++)
         cout << solAGG.solucion[i] << " ";
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
     double error = solAGG.fitness - fun*100;
     cout << "Fitness: " << solAGG.fitness << endl;
     cout << "Error: " << error <<endl;
+    cout << "Tiempo invertido en la ejecución: (s)" << algoritmoGenetico.tiempo << endl;
 
 //    cout << "Población final: " << endl;
 //    for(unsigned int i=0;i<algoritmoGenetico.poblacion.size();i++){

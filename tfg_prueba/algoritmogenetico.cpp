@@ -2,7 +2,7 @@
 
 AlgoritmoGenetico::AlgoritmoGenetico(int n, float probCruce, float alfa,int d,bool tipoAGG, int selec, bool rw)
 {
-    //Inicializamos la población y guardamos su tamaño
+    //Inicializamos la población y guardamos su tamaño y su dimensión (10, 30 o 50)
     tamPoblacion = n;
     poblacionInicial.resize(n);
     dimSolucion = d;
@@ -64,10 +64,9 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
     clock_t start,end;
     start = clock();
 
-
+    //Partimos de la población ordenada
     ordenarPoblacion(poblacion);
     cout << "MEJOR VALOR FITNESS INICIAL: " << poblacion[0].fitness << endl;
-//    double mejorFitnessAnterior = poblacion[0].fitness ;
 
     if(generacional){
         Solucion mejorEncontrado;
@@ -160,8 +159,6 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
                 mejorEncontrado = poblacion[0];
             }
             cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
-//            cout << "Iteración " << i << ": MEJORA RESPECTO A ANTERIOR-> " << mejorFitnessAnterior-poblacion[0].fitness << endl << endl;
-//            mejorFitnessAnterior = poblacion[0].fitness;
 
         }
     }else{

@@ -7,6 +7,7 @@
 #define SCALE 0.4656612875e-9
 
 long Seed;
+
 /*******************************************************************/
 /*  Rand genera un numero real pseudoaleatorio entre 0 y 1,        */
 /*  excluyendo el 1.						   */

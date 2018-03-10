@@ -3,11 +3,14 @@
 
 #include "pseudoaleatorio.h"
 
-
-Solucion::Solucion(int &semilla)
+long funcion_asignada;
+Solucion::Solucion(int &semilla, int &funcion)
 {
     Seed = semilla;
     cout << "Semilla establecida: " << semilla << endl;
+
+    funcion_asignada = funcion;
+    cout << "Función a evaluar elegida: " << funcion_asignada << endl;
 }
 
 
@@ -22,14 +25,15 @@ Solucion::Solucion()
 
 
 //Función para obtener el valor fitness de una solución dada
-void Solucion::calcularFitness(int num)
+void Solucion::calcularFitness()
 {    
     //Creamos un vector donde guardar el valor fitness
     vector<double>fit;
     fit.resize(1);
 
+    //cout << "Función asignada: " << funcion_asignada << endl;
     //Aplicamos la función para obtener el valor de fitness de una solución concreta
-    cec14_test_func(solucion.data(),fit.data(),solucion.size(),1,num);
+    cec14_test_func(solucion.data(),fit.data(),solucion.size(),1,funcion_asignada);
 
     //Guardamos el valor de fitness en una variable de la clase
     fitness = fit[0];
