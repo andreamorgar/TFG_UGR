@@ -25,6 +25,7 @@ public:
     float ValorAleatorioFloat(double topeInferior, double topeSuperior);
 
     Solucion();
+    Solucion(int tam, double value);
 };
 
 #endif // SOLUCION_H

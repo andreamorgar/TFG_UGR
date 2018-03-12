@@ -162,7 +162,7 @@ Solucion AlgoritmoGenetico::run(vector<Solucion> poblacionInicial)
 
         }
     }else{
-        //Algoritmo genético estacionario: vamos a cruzar dos padres y obtener dos hijos
+        //Algoritmo genético VERSIÓN ESTACIONARIO: vamos a cruzar dos padres y obtener dos hijos
         //Los dos hijos competirán con los dos individuos peores de la población, y de entre
         //estos cuatro, conservamos en la población los dos mejores.
         cout << "Entra aquí" << endl;
@@ -231,8 +231,7 @@ Solucion AlgoritmoGenetico::OperadorCruce(Solucion p1, Solucion p2)
 {
 
     //Declaramos una solución para almacenar el resultado del cruce
-    Solucion hijo;
-    hijo.solucion.resize(p1.solucion.size());
+    Solucion hijo(p1.solucion.size(),0);
 
     float I = 0 ,Cmax = p1.solucion[0], Cmin = p1.solucion[0];
     //Vamos obteniendo uno a uno los valores para el hijo

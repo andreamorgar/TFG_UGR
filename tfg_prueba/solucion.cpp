@@ -23,6 +23,12 @@ Solucion::Solucion()
     fitness = 0;
 }
 
+Solucion::Solucion(int tam, double value)
+{
+    solucion=vector<double>(tam,value);
+}
+
+
 
 //Función para obtener el valor fitness de una solución dada
 void Solucion::calcularFitness()
