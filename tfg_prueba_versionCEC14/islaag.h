@@ -31,8 +31,9 @@ public:
     void runIslaAG();
     void runModelosIslas();
     void runIsla_combinacionAG();
+    void runAdaptacion();
 
-    float best_fitness;
+    float best_fitness, best1,best2,best3,best4;
     int algoritmo_mejor_resultado;
     void calcular_permutacion(vector<int> &permutacion);
 };

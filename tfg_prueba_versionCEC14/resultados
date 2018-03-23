@@ -1,0 +1,96 @@
+Resultados de 50 ejecuciones
+
+===========================FUNCIÓN 1========================
+AGG alfa = 0.1 -> 29022418.4
+AGG alfa = 0.3 -> 17466176.4
+AGG alfa = 0.5 -> 14610550.36
+AGG alfa = 0.8 -> 7541034.43
+
+AGE TB con RW -> 12790320.78
+AGE NAM con RW -> 6289024.56
+AGE TB con DC -> 4140209.88
+AGE NAM con DC -> 12590861.0
+
+PRIMER MODELO ISLAS:
+Mejor resultado: 388033.4412
+AGG alfa = 0.1 -> 790060.9406
+AGG alfa = 0.3 -> 698479.5296
+AGG alfa = 0.5 -> 578583.5566
+AGG alfa = 0.8 -> 411661.9892
+
+
+SEGUNDO MODELO ISLAS:
+Mejor resultado: 129714.5014
+AGE TB con RW -> 217548.5068
+AGE NAM con RW -> 156873.6898
+AGE TB con DC -> 192328.5634
+AGE NAM con DC -> 204523.8094
+
+
+TERCER MODELO ISLAS:
+Mejor resultado: 144245.6294
+AGE NAM y DC -> 162442.6292
+AGE TB y DC -> 205799.506
+AGG alfa = 0.5 ->193283.952
+AGG alfa = 0.8 -> 181830.7434
+
+-------------------------------------------------
+Adaptaciones 5% evaluaciones cada algoritmo de los implementados en islas
+y 80% restante el mejor de ellos:
+
+ADAPTACIÓN- 1ER MODELO 
+3583335.991
+
+ADAPTACIÓN - 2DO MODELO
+2089789.782
+
+ADAPTACIÓN - 3ER MODELO
+550730.41234
+
+===========================FUNCIÓN 2========================
+AGG alfa = 0.1 -> 875950512.0
+AGG alfa = 0.3 -> 241302229.2
+AGG alfa = 0.5 -> 12991186.1782
+AGG alfa = 0.8 -> 15869.7256657
+
+AGE TB con RW -> 25547798.6188
+AGE NAM con RW -> 2391.96752355
+AGE TB con DC -> 67748643.52
+AGE NAM con DC -> 1934668710.0
+
+PRIMER MODELO ISLAS:
+Mejor resultado: 9895.0050596
+AGG alfa = 0.1 -> 10008.1020706
+AGG alfa = 0.3 -> 9997.1481554
+AGG alfa = 0.5 -> 10011.9440254
+AGG alfa = 0.8 -> 9898.0123322
+
+
+SEGUNDO MODELO ISLAS:
+Mejor resultado: 2441.28172594
+AGE TB con RW -> 2454.96537954
+AGE NAM con RW -> 2445.29495744
+AGE TB con DC -> 2442.62001504
+AGE NAM con DC -> 2453.94518624
+
+
+TERCER MODELO ISLAS:
+Mejor resultado: 3811.8759658
+AGE NAM y DC -> 3925.3051006
+AGE TB y DC -> 6185.7088544
+AGG alfa = 0.5 ->5056.9410328
+AGG alfa = 0.8 -> 4308.4774398
+
+-------------------------------------------------
+Adaptaciones 5% evaluaciones cada algoritmo de los implementados en islas
+y 80% restante el mejor de ellos:
+
+ADAPTACIÓN- 1ER MODELO 
+9451.345797
+
+ADAPTACIÓN - 2DO MODELO
+3421.66373229
+
+ADAPTACIÓN - 3ER MODELO
+50208.9117656
+

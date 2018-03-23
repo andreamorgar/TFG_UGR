@@ -134,14 +134,14 @@ vector<Solucion> AlgoritmoGenetico::run(vector<Solucion> poblacionInicial, int i
     poblacion = poblacionInicial;
 
     //==================================================================================
-    //Mostramos por pantalla la población inicial
-    cout << "Población inicial :" << endl;
-    for(unsigned int i=0;i<poblacionInicial.size();i++){
-        for(unsigned int j=0; j<poblacionInicial[i].solucion.size();j++){
-            cout << poblacionInicial[i].solucion[j] << " " ;
-        }
-        cout <<", fitness->" << poblacionInicial[i].fitness << endl;
-     }
+//    //Mostramos por pantalla la población inicial
+//    cout << "Población inicial :" << endl;
+//    for(unsigned int i=0;i<poblacionInicial.size();i++){
+//        for(unsigned int j=0; j<poblacionInicial[i].solucion.size();j++){
+//            cout << poblacionInicial[i].solucion[j] << " " ;
+//        }
+//        cout <<", fitness->" << poblacionInicial[i].fitness << endl;
+//     }
     //==================================================================================
 
     //Iniciamos las variables necesarias para poder medir el tiempo de ejecución del algoritmo
@@ -150,7 +150,7 @@ vector<Solucion> AlgoritmoGenetico::run(vector<Solucion> poblacionInicial, int i
 
     //Partimos de la población ordenada
     ordenarPoblacion(poblacion);
-    cout << "MEJOR VALOR FITNESS INICIAL: " << poblacion[0].fitness << endl;
+    //cout << "MEJOR VALOR FITNESS INICIAL: " << poblacion[0].fitness << endl;
 
     if(generacional){
         Solucion mejorEncontrado;
@@ -198,14 +198,14 @@ vector<Solucion> AlgoritmoGenetico::run(vector<Solucion> poblacionInicial, int i
             }else{
               mejorEncontrado = poblacion[0];
             }
-            cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
+            //cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
 
         }
     }else{
         //Algoritmo genético VERSIÓN ESTACIONARIO: vamos a cruzar dos padres y obtener dos hijos
         //Los dos hijos competirán con los dos individuos peores de la población, y de entre
         //estos cuatro, conservamos en la población los dos mejores.
-        cout << "Entra aquí" << endl;
+
         Solucion hijoObtenido;
         int i = 0;
         int padre1=0,padre2=0;
@@ -235,7 +235,7 @@ vector<Solucion> AlgoritmoGenetico::run(vector<Solucion> poblacionInicial, int i
             //Vamos a mutar nEsperadoGenesMutados
             //Mutacion(poblacionHijos);  De momento prescindimos de mutación.
 
-            cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
+            //cout << "Iteración " << i << ": MEJOR FITNESS-> " << poblacion[0].fitness << endl;
         }
     }
 
