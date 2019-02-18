@@ -22,4 +22,4 @@ In a second place, we are going to generate a classic Island Model that incorpor
 
 - [CONTENIDOS_EXTRA](https://github.com/andreamorgar/TFG_UGR/tree/master/CONTENIDOS_EXTRA): extra information, used in documentation (graphics, table results,...)
 
-- [presentacionFinal.pdf](): presentation material
+- [presentacionFinal.pdf](https://github.com/andreamorgar/TFG_UGR/blob/master/presentacionFinal.pdf): presentation material
