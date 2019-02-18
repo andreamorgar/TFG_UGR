@@ -1,4 +1,4 @@
-# TÉCNICAS AVANZADAS DE HIBRIDACIÓN PARA METAHEURÍSTICAS
+# Advanced Hybridization Techniques of Metaheuristics
 
 ### Summary
 
@@ -16,8 +16,10 @@ In a second place, we are going to generate a classic Island Model that incorpor
 
 ### Content
 
-- [SOFTWARE_PROYECTO](): software implementation
+- [SOFTWARE_PROYECTO](https://github.com/andreamorgar/TFG_UGR/tree/master/SOFTWARE_PROYECTO): software implementation
 
-- [Memoria_AndreaMoralesGarzon.pdf](): project documentation
+- [Memoria_AndreaMoralesGarzon.pdf](https://github.com/andreamorgar/TFG_UGR/blob/master/Memoria_AndreaMoralesGarzon.pdf): project documentation
 
-- [CONTENIDOS_EXTRA](): extra information, used in documentation (graphics, table results,...)
+- [CONTENIDOS_EXTRA](https://github.com/andreamorgar/TFG_UGR/tree/master/CONTENIDOS_EXTRA): extra information, used in documentation (graphics, table results,...)
+
+- [presentacionFinal.pdf](): presentation material
